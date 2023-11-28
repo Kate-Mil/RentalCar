@@ -8,6 +8,8 @@ const Layout = () => {
   return (
     <LayoutWrapper>
       <SectionWrapper>
+        <button>Catalog</button>
+        <button>Favorite</button>
         {/* {!isHomePage && <SearchBar />} */}
         <OutletWrapper>
           <Outlet />
