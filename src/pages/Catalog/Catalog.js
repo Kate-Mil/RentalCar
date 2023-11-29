@@ -13,7 +13,7 @@ export const Catalog = () => {
       setIsloading(true);
       try {
         const data = await getAdverts(page);
-        console.log({ data });
+        console.log(data);
         setAdverts(data);
       } catch (error) {
         setError(error.message);
@@ -30,7 +30,7 @@ export const Catalog = () => {
   };
   return (
     <>
-      <div>Hello Catalog</div>;
+      <div>Hello Catalog</div>
       <div>
         <ul>
           {adverts.map(({ id, make }) => (
@@ -42,7 +42,7 @@ export const Catalog = () => {
           {isloading && <Loader />}
         </ul>
       </div>
-      <button onClick={hendleClick}>LoadMore</button>
+      {adverts.length >= 12 && <button onClick={hendleClick}>LoadMore</button>}
     </>
   );
 };
