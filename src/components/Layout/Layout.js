@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { AppBar } from "components/AppBar/AppBar";
 import { LayoutWrapper, SectionWrapper, OutletWrapper } from "./Layout.styled";
 
 const Layout = () => {
@@ -8,8 +9,7 @@ const Layout = () => {
   return (
     <LayoutWrapper>
       <SectionWrapper>
-        <button>Catalog</button>
-        <button>Favorite</button>
+        <AppBar />
         {/* {!isHomePage && <SearchBar />} */}
         <OutletWrapper>
           <Outlet />
