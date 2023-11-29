@@ -3,7 +3,10 @@ import { NavLink } from "react-router-dom";
 export const AppBar = () => {
   return (
     <>
-      <ul>
+      <ul style={{ display: "flex", gap: 25, flexDirection: "row" }}>
+        <NavLink to="/">
+          <button>Home</button>
+        </NavLink>
         <NavLink to="/catalog">
           <button>Catalog</button>
         </NavLink>
