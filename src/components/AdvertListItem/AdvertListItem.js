@@ -1,4 +1,4 @@
-export const AdvertListItem = ({ data }) => {
+export const AdvertListItem = ({ data, onClick }) => {
   const {
     // year,
     make,
@@ -11,5 +11,5 @@ export const AdvertListItem = ({ data }) => {
     // address,
     // mileage,
   } = data;
-  return <div>{make}</div>;
+  return <div onClick={() => onClick({ data })}>{make}</div>;
 };

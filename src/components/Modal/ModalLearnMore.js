@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Overlay, ModalContent } from "./ModalLearnMore.styled";
 
-const modalRoot = document.querySelector("#modal-root");
+const modalRoot = document.getElementById("modal-root");
 
 export const ModalLearnMore = ({ modalData, onClick }) => {
+  console.log(modalData);
   useEffect(() => {
     const hendleKeyDown = (e) => {
       if (e.code === "Escape") {
@@ -24,12 +25,10 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
     }
   };
 
-  const { largeImageURL, tags } = modalData;
-
   return createPortal(
     <Overlay onClick={hendleOverlayClick}>
       <ModalContent>
-        <img src={largeImageURL} alt={tags} />
+        <div>MODAL OPEN</div>
       </ModalContent>
     </Overlay>,
     modalRoot
