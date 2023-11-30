@@ -1,6 +1,7 @@
 export const AdvertListItem = ({ data, onClick }) => {
   const {
     // year,
+    //id,
     make,
     // model,
     // type,

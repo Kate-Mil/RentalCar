@@ -35,7 +35,6 @@ export const Catalog = () => {
   };
 
   const toggleModal = (modalData) => {
-    console.log("clik");
     setShowModal(!showModal);
     setModalData(modalData);
   };
