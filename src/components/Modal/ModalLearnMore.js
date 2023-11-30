@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import {
   Overlay,
@@ -7,11 +7,10 @@ import {
   Container,
   CloseBtn,
 } from "./ModalLearnMore.styled";
-// import defaultPhoto from "../../img/defaultPhoto.jpg";
-
-const modalRoot = document.getElementById("modal-root");
 
 export const ModalLearnMore = ({ modalData, onClick }) => {
+  const [modalRoot, setModalRoot] = useState(null);
+
   const {
     year,
     id,
@@ -31,24 +30,39 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
   } = modalData;
 
   useEffect(() => {
-    const hendleKeyDown = (e) => {
+    const modalRootDiv = document.createElement("div");
+    modalRootDiv.id = "modal-root";
+    document.body.appendChild(modalRootDiv);
+    setModalRoot(modalRootDiv);
+
+    return () => {
+      document.body.removeChild(modalRootDiv);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
       if (e.code === "Escape") {
         onClick();
       }
     };
-    window.addEventListener("keydown", hendleKeyDown);
+
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("keydown", hendleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [onClick]);
 
-  const hendleOverlayClick = (e) => {
+  const handleOverlayClick = (e) => {
     if (e.currentTarget === e.target) {
       onClick();
     }
   };
 
+  if (!modalRoot) {
+    return null;
+  }
   const adressParts = address.split(/,\s*/);
   const city = adressParts[1];
   const country = adressParts[2];
@@ -58,8 +72,9 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
   const minimumAge = minimumAgeMatch ? minimumAgeMatch[0] : null;
 
   return createPortal(
-    <Overlay onClick={hendleOverlayClick}>
+    <Overlay onClick={handleOverlayClick}>
       <ModalContent>
+        {" "}
         <Container>
           <CloseBtn type="button" onClick={() => onClick()}>
             Close

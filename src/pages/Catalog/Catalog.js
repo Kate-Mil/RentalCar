@@ -3,6 +3,7 @@ import { getAdverts } from "../../API/advertsApi";
 import Loader from "../../components/Loader/Loader";
 import { AdvertListItem } from "components/AdvertListItem/AdvertListItem";
 import { ModalLearnMore } from "../../components/Modal/ModalLearnMore";
+import { CatalogListWrapper } from "./Catalog.styled";
 
 export const Catalog = () => {
   const [adverts, setAdverts] = useState([]);
@@ -42,7 +43,7 @@ export const Catalog = () => {
     <>
       <div>Hello Catalog</div>
       <div>
-        <ul>
+        <CatalogListWrapper>
           {adverts.map((advert) => (
             <AdvertListItem
               key={advert.id}
@@ -52,7 +53,7 @@ export const Catalog = () => {
           ))}
           {error && <p>{error.message}</p>}
           {isloading && <Loader />}
-        </ul>
+        </CatalogListWrapper>
       </div>
       {pageLimit >= 12 && <button onClick={incrementPage}>LoadMore</button>}
       {showModal && (

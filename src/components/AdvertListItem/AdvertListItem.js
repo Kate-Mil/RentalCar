@@ -1,25 +1,62 @@
+import { ImgWrapper, Container, LikesBnt } from "./AdvertListItem.styled";
+// import defaultPhoto from "../../img/defaultPhoto.jpg";
+
 export const AdvertListItem = ({ data, onClick }) => {
   const {
-    // year,
-    //id,
+    year,
+    id,
     make,
-    // model,
-    // type,
-    // img,
-    // functionalities,
-    // rentalPrice,
-    // rentalCompany,
-    // address,
-    // mileage,
+    model,
+    type,
+    img,
+    functionalities,
+    rentalPrice,
+    rentalCompany,
+    address,
   } = data;
+
+  const adressParts = address.split(/,\s*/);
+  const city = adressParts[1];
+  const country = adressParts[2];
 
   const handlClick = () => {
     onClick(data);
   };
+
   return (
     <>
-      <div>{make}</div>
-      <button onClick={handlClick}>Learn more</button>
+      <Container>
+        <ImgWrapper>
+          <LikesBnt type="button" onClick={() => onClick()}>
+            Like
+          </LikesBnt>
+          <img
+            src={img}
+            //   src={img ? img : defaultPhoto}
+            alt={`${make} ${model} ${year}`}
+          />
+        </ImgWrapper>
+        <div>
+          <div>
+            <h2>
+              {make}
+              <span>{model}</span>,{year}
+            </h2>
+            <p>{rentalPrice}</p>
+          </div>
+          <div>
+            <p>{city}</p>
+            <p>{country}</p>
+            <p>{rentalCompany}</p>
+            <p>premium</p>
+            <p>{type}</p>
+            <p>{model}</p>
+            <p>{id}</p>
+            {functionalities.length !== 0 && <p>{functionalities[0]}</p>}
+          </div>
+        </div>
+        <button onClick={handlClick}>Learn more</button>
+      </Container>
     </>
   );
 };
