@@ -13,23 +13,21 @@ const modalRoot = document.getElementById("modal-root");
 
 export const ModalLearnMore = ({ modalData, onClick }) => {
   const {
-    data: {
-      year,
-      id,
-      make,
-      model,
-      type,
-      img,
-      description,
-      functionalities,
-      rentalPrice,
-      rentalConditions,
-      fuelConsumption,
-      engineSize,
-      accessories,
-      address,
-      mileage,
-    },
+    year,
+    id,
+    make,
+    model,
+    type,
+    img,
+    description,
+    functionalities,
+    rentalPrice,
+    rentalConditions,
+    fuelConsumption,
+    engineSize,
+    accessories,
+    address,
+    mileage,
   } = modalData;
 
   useEffect(() => {
@@ -63,11 +61,12 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
     <Overlay onClick={hendleOverlayClick}>
       <ModalContent>
         <Container>
-          <CloseBtn type="button">Close</CloseBtn>
+          <CloseBtn type="button" onClick={() => onClick()}>
+            Close
+          </CloseBtn>
           <ImgWrapper>
             <img
               src={img}
-              //   src={defaultPhoto}
               //   src={img ? img : defaultPhoto}
               alt={`${make} ${model} ${year}`}
             />

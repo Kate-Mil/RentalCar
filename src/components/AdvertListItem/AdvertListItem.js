@@ -12,5 +12,14 @@ export const AdvertListItem = ({ data, onClick }) => {
     // address,
     // mileage,
   } = data;
-  return <div onClick={() => onClick({ data })}>{make}</div>;
+
+  const handlClick = () => {
+    onClick(data);
+  };
+  return (
+    <>
+      <div>{make}</div>
+      <button onClick={handlClick}>Learn more</button>
+    </>
+  );
 };
