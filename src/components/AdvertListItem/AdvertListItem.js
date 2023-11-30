@@ -1,7 +1,14 @@
-import { ImgWrapper, Container, LikesBnt } from "./AdvertListItem.styled";
+import { ImgWrapper, Container } from "./AdvertListItem.styled";
+import { FavoriteButton } from "components/FavoriteBtn/FavoriteBtn";
+
 // import defaultPhoto from "../../img/defaultPhoto.jpg";
 
-export const AdvertListItem = ({ data, onClick }) => {
+export const AdvertListItem = ({
+  data,
+  onClick,
+  onChooseFavorite,
+  favorites,
+}) => {
   const {
     year,
     id,
@@ -27,9 +34,10 @@ export const AdvertListItem = ({ data, onClick }) => {
     <>
       <Container>
         <ImgWrapper>
-          <LikesBnt type="button" onClick={() => onClick()}>
-            Like
-          </LikesBnt>
+          <FavoriteButton
+            onClick={() => onChooseFavorite(data)}
+            isFavorite={favorites.includes(data)}
+          />
           <img
             src={img}
             //   src={img ? img : defaultPhoto}

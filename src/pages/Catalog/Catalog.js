@@ -13,6 +13,7 @@ export const Catalog = () => {
   const [pageLimit, setPageLimit] = useState(12);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -31,6 +32,17 @@ export const Catalog = () => {
     fetchData();
   }, [page]);
 
+  const handleChooseFavorite = (data) => {
+    if (!favorites.includes(data)) {
+      setFavorites((prevFavorites) => [...prevFavorites, data]);
+    } else {
+      setFavorites((prevFavorites) =>
+        prevFavorites.filter((item) => item !== data)
+      );
+    }
+  };
+  console.log(favorites);
+
   const incrementPage = () => {
     setPage((prevState) => prevState + 1);
   };
@@ -48,7 +60,9 @@ export const Catalog = () => {
             <AdvertListItem
               key={advert.id}
               data={advert}
+              favorites={favorites}
               onClick={toggleModal}
+              onChooseFavorite={handleChooseFavorite}
             />
           ))}
           {error && <p>{error.message}</p>}

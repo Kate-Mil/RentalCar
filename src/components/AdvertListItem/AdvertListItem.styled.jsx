@@ -12,9 +12,3 @@ export const ImgWrapper = styled.div`
 export const Container = styled.div`
   padding: 40px;
 `;
-
-export const LikesBnt = styled.button`
-  position: absolute;
-  top: 14px;
-  right: 14px;
-`;
