@@ -1,6 +1,13 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Overlay, ModalContent } from "./ModalLearnMore.styled";
+import {
+  Overlay,
+  ModalContent,
+  ImgWrapper,
+  Container,
+  CloseBtn,
+} from "./ModalLearnMore.styled";
+// import defaultPhoto from "../../img/defaultPhoto.jpg";
 
 const modalRoot = document.getElementById("modal-root");
 
@@ -13,6 +20,7 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
       model,
       type,
       img,
+      description,
       functionalities,
       rentalPrice,
       rentalConditions,
@@ -54,26 +62,32 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
   return createPortal(
     <Overlay onClick={hendleOverlayClick}>
       <ModalContent>
-        <div>
-          <button type="button">Close</button>
-          <div>
-            <img src={img} alt={`${make} ${model} ${year}`} />
-          </div>
+        <Container>
+          <CloseBtn type="button">Close</CloseBtn>
+          <ImgWrapper>
+            <img
+              src={img}
+              //   src={defaultPhoto}
+              //   src={img ? img : defaultPhoto}
+              alt={`${make} ${model} ${year}`}
+            />
+          </ImgWrapper>
           <div>
             <h2>
               {make}
               <span>{model}</span>,{year}
             </h2>
+            <div>
+              <p>{city}</p>
+              <p>{country}</p>
+              <p>Id: {id}</p>
+              <p>Year: {year}</p>
+              <p>Type: {type}</p>
+              <p>Fuel Consumption:{fuelConsumption}</p>
+              <p>Engine Size: {engineSize}</p>
+            </div>
           </div>
-          <div>
-            <p>{city}</p>
-            <p>{country}</p>
-            <p>Id: {id}</p>
-            <p>Year: {year}</p>
-            <p>Type: {type}</p>
-            <p>Fuel Consumption:{fuelConsumption}</p>
-            <p>Engine Size: {engineSize}</p>
-          </div>
+          <p>{description}</p>
           <div>
             <h3>Accessories and functionalities:</h3>
             {accessories.length !== 0 &&
@@ -95,7 +109,7 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
             <p>Price:{rentalPrice}</p>
           </div>
           <a href="tel:+380730000000">Rental car</a>
-        </div>
+        </Container>
       </ModalContent>
     </Overlay>,
     modalRoot

@@ -1,17 +1,20 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   body {
-    font-family: 'Jost', sans-serif;
+    font-family: Manrope;
     font-style: normal;
     margin: 0;
     padding: 0;
-    background: #F8F8F7;
-    color: #1d1d1d;
+    background: #FFF;
+    color: #121417;
   }
 
   *, *::before, *::after {
     box-sizing: border-box;
+  }
+  h1,h2,h3 {
+    margin: 0;
   }
 
   p, ul {
@@ -25,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 
   img {
     display: block;
-    // width: 100%;
+    width: 100%;
     height: auto;
   }
 
