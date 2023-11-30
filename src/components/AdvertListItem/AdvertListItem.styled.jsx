@@ -9,6 +9,4 @@ export const ImgWrapper = styled.div`
   margin-bottom: 14px;
 `;
 
-export const Container = styled.div`
-  padding: 40px;
-`;
+export const Container = styled.div``;
