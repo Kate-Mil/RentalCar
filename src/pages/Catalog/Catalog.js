@@ -4,8 +4,16 @@ import Loader from "../../components/Loader/Loader";
 import { AdvertListItem } from "components/AdvertListItem/AdvertListItem";
 import { ModalLearnMore } from "../../components/Modal/ModalLearnMore";
 import { CatalogListWrapper } from "./Catalog.styled";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToFavorites,
+  deleteFromFavorites,
+  selectFavorites,
+} from "../../redux";
 
 export const Catalog = () => {
+  const dispatch = useDispatch();
+  const favorites = useSelector(selectFavorites);
   const [adverts, setAdverts] = useState([]);
   const [isloading, setIsloading] = useState(false);
   const [error, setError] = useState(null);
@@ -13,7 +21,6 @@ export const Catalog = () => {
   const [pageLimit, setPageLimit] = useState(12);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -34,14 +41,11 @@ export const Catalog = () => {
 
   const handleChooseFavorite = (data) => {
     if (!favorites.includes(data)) {
-      setFavorites((prevFavorites) => [...prevFavorites, data]);
+      dispatch(addToFavorites(data));
     } else {
-      setFavorites((prevFavorites) =>
-        prevFavorites.filter((item) => item !== data)
-      );
+      dispatch(deleteFromFavorites(data));
     }
   };
-  console.log(favorites);
 
   const incrementPage = () => {
     setPage((prevState) => prevState + 1);
