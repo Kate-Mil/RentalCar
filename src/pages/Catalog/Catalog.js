@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { getAdverts } from "../../API/advertsApi";
+import { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import { AdvertListItem } from "components/AdvertListItem/AdvertListItem";
 import { ModalLearnMore } from "../../components/Modal/ModalLearnMore";
@@ -8,36 +7,30 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addToFavorites,
   deleteFromFavorites,
+  fetchAdverts,
+  incrementPage,
+  selectAdverts,
+  selectError,
   selectFavorites,
+  selectIsLoading,
+  selectPage,
+  selectPageLimit,
 } from "../../redux";
 
 export const Catalog = () => {
   const dispatch = useDispatch();
   const favorites = useSelector(selectFavorites);
-  const [adverts, setAdverts] = useState([]);
-  const [isloading, setIsloading] = useState(false);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [pageLimit, setPageLimit] = useState(12);
+  const adverts = useSelector(selectAdverts);
+  const page = useSelector(selectPage);
+  const pageLimit = useSelector(selectPageLimit);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      setIsloading(true);
-      try {
-        const data = await getAdverts(page);
-        setAdverts((prevAdverts) => [...prevAdverts, ...data]);
-        setPageLimit(data.length);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setIsloading(false);
-      }
-    }
-
-    fetchData();
-  }, [page]);
+    dispatch(fetchAdverts(page));
+  }, [dispatch, page]);
 
   const handleChooseFavorite = (data) => {
     if (!favorites.includes(data)) {
@@ -47,16 +40,15 @@ export const Catalog = () => {
     }
   };
 
-  const incrementPage = () => {
-    setPage((prevState) => prevState + 1);
-  };
-
   const toggleModal = (modalData) => {
     setShowModal(!showModal);
     setModalData(modalData);
   };
+
   return (
     <>
+      {isLoading && <Loader />}
+      {error && <p>{error.message}</p>}
       <div>Hello Catalog</div>
       <div>
         <CatalogListWrapper>
@@ -69,11 +61,11 @@ export const Catalog = () => {
               onChooseFavorite={handleChooseFavorite}
             />
           ))}
-          {error && <p>{error.message}</p>}
-          {isloading && <Loader />}
         </CatalogListWrapper>
       </div>
-      {pageLimit >= 12 && <button onClick={incrementPage}>LoadMore</button>}
+      {adverts.length % pageLimit === 0 && (
+        <button onClick={() => dispatch(incrementPage())}>LoadMore</button>
+      )}
       {showModal && (
         <ModalLearnMore modalData={modalData} onClick={toggleModal} />
       )}
