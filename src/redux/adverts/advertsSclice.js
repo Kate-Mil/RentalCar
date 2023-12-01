@@ -10,8 +10,9 @@ import storage from "redux-persist/lib/storage";
 
 const initialState = {
   cards: [],
+  favorites: [],
   page: 1,
-  PageLimit: 12,
+  pageLimit: 12,
   isLoading: false,
   error: null,
 };
@@ -22,6 +23,14 @@ export const advertsSlice = createSlice({
   reducers: {
     incrementPage: (state) => {
       state.page += 1;
+    },
+    addToFavorites: (state, { payload }) => {
+      state.favorites.push(payload);
+    },
+    deleteFromFavorites: (state, { payload }) => {
+      state.favorites = state.favorites.filter(
+        (item) => item.id !== payload.id
+      );
     },
   },
   extraReducers: (builder) => {
@@ -37,8 +46,9 @@ export const advertsSlice = createSlice({
 });
 
 export const persistedAdvertsSlice = persistReducer(
-  { key: "adverts", storage, whitelist: ["cards"] },
+  { key: "adverts", storage, whitelist: ["cards", "favorites"] },
   advertsSlice.reducer
 );
 
-export const { incrementPage } = advertsSlice.actions;
+export const { incrementPage, addToFavorites, deleteFromFavorites } =
+  advertsSlice.actions;

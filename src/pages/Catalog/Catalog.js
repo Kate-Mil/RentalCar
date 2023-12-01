@@ -28,12 +28,14 @@ export const Catalog = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
 
+  const getAdvertsWithFavorites = adverts.map((advert) => {
+    const favoriteIndex = favorites.findIndex((f) => f.id === advert.id);
+    return favoriteIndex !== -1 ? favorites[favoriteIndex] : advert;
+  });
+
   useEffect(() => {
-    if (adverts.length !== 0) {
-      return;
-    }
     dispatch(fetchAdverts(page));
-  }, [dispatch, page, adverts.length]);
+  }, [dispatch, page]);
 
   const handleChooseFavorite = (data) => {
     if (!favorites.includes(data)) {
@@ -55,7 +57,7 @@ export const Catalog = () => {
       <div>Hello Catalog</div>
       <div>
         <CatalogListWrapper>
-          {adverts.map((advert) => (
+          {getAdvertsWithFavorites.map((advert) => (
             <AdvertListItem
               key={advert.id}
               data={advert}

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistedAdvertsSlice, persistedFavoritesSlice } from "./index";
+import { persistedAdvertsSlice } from "./index";
 
 import {
   persistStore,
@@ -13,7 +13,6 @@ import {
 
 export const store = configureStore({
   reducer: {
-    favorites: persistedFavoritesSlice,
     adverts: persistedAdvertsSlice,
   },
   middleware: (getDefaultMiddleware) =>
