@@ -10,6 +10,10 @@ const GlobalStyle = createGlobalStyle`
     color: #121417;
   }
 
+  body.modal-open {
+    overflow: hidden;
+  }
+
   *, *::before, *::after {
     box-sizing: border-box;
   }

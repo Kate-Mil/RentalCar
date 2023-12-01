@@ -46,13 +46,18 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
         onClick();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [onClick]);
+
+  useEffect(() => {
+    document.body.classList.add("modal-open");
+    return () => {
+      document.body.classList.remove("modal-open");
+    };
+  }, [modalRoot]);
 
   const handleOverlayClick = (e) => {
     if (e.currentTarget === e.target) {
