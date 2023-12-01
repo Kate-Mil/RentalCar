@@ -15,7 +15,6 @@ export const Favorites = () => {
   const favorites = useSelector(selectFavorites);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
-  console.log(favorites);
 
   const handleChooseFavorite = (data) => {
     if (!favorites.includes(data)) {

@@ -29,8 +29,11 @@ export const Catalog = () => {
   const [modalData, setModalData] = useState(null);
 
   useEffect(() => {
+    if (adverts.length !== 0) {
+      return;
+    }
     dispatch(fetchAdverts(page));
-  }, [dispatch, page]);
+  }, [dispatch, page, adverts.length]);
 
   const handleChooseFavorite = (data) => {
     if (!favorites.includes(data)) {

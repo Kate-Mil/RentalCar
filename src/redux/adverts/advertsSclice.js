@@ -5,6 +5,8 @@ import {
   handleRejected,
   fetchAdverts,
 } from "../index";
+import persistReducer from "redux-persist/es/persistReducer";
+import storage from "redux-persist/lib/storage";
 
 const initialState = {
   cards: [],
@@ -33,5 +35,10 @@ export const advertsSlice = createSlice({
       }, handleRejected);
   },
 });
+
+export const persistedAdvertsSlice = persistReducer(
+  { key: "adverts", storage, whitelist: ["cards"] },
+  advertsSlice.reducer
+);
 
 export const { incrementPage } = advertsSlice.actions;
