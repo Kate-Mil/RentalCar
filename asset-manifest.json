@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/RentalCar/static/js/main.bac46830.js",
+    "main.js": "/RentalCar/static/js/main.098eedb6.js",
     "static/media/sprite.svg": "/RentalCar/static/media/sprite.a58bb4bac929b7db85a51f8d162b29d2.svg",
     "index.html": "/RentalCar/index.html",
-    "main.bac46830.js.map": "/RentalCar/static/js/main.bac46830.js.map"
+    "main.098eedb6.js.map": "/RentalCar/static/js/main.098eedb6.js.map"
   },
   "entrypoints": [
-    "static/js/main.bac46830.js"
+    "static/js/main.098eedb6.js"
   ]
 }
