@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
+import { useFormik } from "formik";
 import { FilterByCarBrand } from "components/FilterByCarBrand/FilterByCarBrand";
 import { CloseBtn, Img, SearchFormWrapper, Wrapper } from "./SearchBar.styled";
 import sprite from "../../img/sprite.svg";
+import { SearchFormSchema } from "ValidationSchemas/SearchFormSchema";
 
 export const SearchBar = () => {
   const containerRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [inputСarBrandValue, setInputСarBrandValue] = useState("");
 
   useEffect(() => {
     const handleEscapeKey = (e) => {
@@ -31,6 +32,30 @@ export const SearchBar = () => {
     };
   }, [isOpen, setIsOpen, containerRef]);
 
+  const {
+    values,
+    touched,
+    errors,
+    setFieldValue,
+    handleSubmit,
+    handleChange,
+    handleBlur,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      brand: "",
+      price: "",
+      mileageFrom: "",
+      mileageTo: "",
+    },
+    validationSchema: SearchFormSchema,
+    onSubmit: async (values) => {
+      await new Promise((r) => setTimeout(r, 500));
+      alert(JSON.stringify(values, null, 2));
+      resetForm();
+    },
+  });
+
   const toggleDropdown = (e) => {
     console.log("click");
     setIsOpen(!isOpen);
@@ -39,23 +64,25 @@ export const SearchBar = () => {
 
   const handleSelectedCarBrand = (selectedCarBrand) => {
     console.log("Selected:", selectedCarBrand);
-    setInputСarBrandValue(selectedCarBrand);
-    // Вы можете использовать выбранное значение здесь в SearchBar
+    setFieldValue("brand", selectedCarBrand);
   };
 
   return (
-    <SearchFormWrapper>
+    <SearchFormWrapper onSubmit={handleSubmit}>
       <Wrapper>
-        <input
-          type="text"
-          autoComplete="off"
-          name="query"
-          value={inputСarBrandValue}
-          // onChange={(e) => setInputСarBrandValue(e.target.value)}
-          autoFocus
-          placeholder="Enter the text"
-        />
-
+        <label htmlFor="brand">
+          Car brand
+          <input
+            type="text"
+            name="brand"
+            value={values.brand}
+            onBlur={handleBlur}
+            $error={touched.brand && errors.brand}
+            placeholder="Enter the text"
+            autoComplete="off"
+          />
+          {touched.brand && errors.brand && <div>{errors.brand}</div>}
+        </label>
         <CloseBtn
           type="button"
           ref={containerRef}
@@ -66,37 +93,55 @@ export const SearchBar = () => {
             <use href={`${sprite}#chevron-down`}></use>
           </Img>
         </CloseBtn>
-        <div>
-          {isOpen && (
-            <FilterByCarBrand
-              isOpen={isOpen}
-              onClose={() => setIsOpen(false)}
-              onSelect={handleSelectedCarBrand}
-            />
-          )}
-        </div>
+        {isOpen && (
+          <FilterByCarBrand
+            isOpen={isOpen}
+            onClose={() => setIsOpen(false)}
+            onSelect={handleSelectedCarBrand}
+          />
+        )}
       </Wrapper>
-      <input
-        type="text"
-        autoComplete="off"
-        name="query"
-        autoFocus
-        placeholder="To"
-      />
-      <input
-        type="text"
-        autoComplete="off"
-        name="query"
-        autoFocus
-        placeholder="From"
-      />
-      <input
-        type="text"
-        autoComplete="off"
-        name="query"
-        autoFocus
-        placeholder="To"
-      />
+      <label htmlFor="price">
+        Price/ 1 hour
+        <input
+          type="text"
+          name="price"
+          value={values.price}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          $error={touched.price && errors.price}
+          placeholder="To"
+          autoComplete="off"
+        />
+        {touched.price && errors.price && <div>{errors.price}</div>}
+      </label>
+      <label htmlFor="mileage">
+        Сar mileage / km
+        <input
+          type="text"
+          name="mileageFrom"
+          value={values.mileageFrom}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          $error={touched.mileageFrom && errors.mileageFrom}
+          placeholder="From"
+          autoComplete="off"
+        />
+        {touched.mileageFrom && errors.mileageFrom && (
+          <div>{errors.mileageFrom}</div>
+        )}
+        <input
+          type="text"
+          name="mileageTo"
+          value={values.mileageTo}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          $error={touched.mileageTo && errors.mileageTo}
+          placeholder="To"
+          autoComplete="off"
+        />
+        {touched.mileageTo && errors.mileageTo && <div>{errors.mileageTo}</div>}
+      </label>
 
       <button type="submit">Search</button>
     </SearchFormWrapper>
