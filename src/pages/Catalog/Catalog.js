@@ -54,7 +54,6 @@ export const Catalog = () => {
     <>
       {isLoading && <Loader />}
       {error && <p>{error.message}</p>}
-      <div>Hello Catalog</div>
       <div>
         <CatalogListWrapper>
           {getAdvertsWithFavorites.map((advert) => (

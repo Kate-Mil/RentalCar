@@ -2,8 +2,6 @@ import { NavLink } from "react-router-dom";
 export const Home = () => {
   return (
     <>
-      <div>Hello Home</div>
-
       <h1>Вітаємо на сайті аренди автомобілів</h1>
 
       <section>
