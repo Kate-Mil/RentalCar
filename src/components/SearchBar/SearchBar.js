@@ -4,8 +4,11 @@ import { FilterByCarBrand } from "components/FilterByCarBrand/FilterByCarBrand";
 import { CloseBtn, Img, SearchFormWrapper, Wrapper } from "./SearchBar.styled";
 import sprite from "../../img/sprite.svg";
 import { SearchFormSchema } from "ValidationSchemas/SearchFormSchema";
+import { changeFilter } from "../../redux";
+import { useDispatch } from "react-redux";
 
 export const SearchBar = () => {
+  const dispatch = useDispatch();
   const containerRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -50,20 +53,17 @@ export const SearchBar = () => {
     },
     validationSchema: SearchFormSchema,
     onSubmit: async (values) => {
-      await new Promise((r) => setTimeout(r, 500));
-      alert(JSON.stringify(values, null, 2));
+      dispatch(changeFilter(values));
       resetForm();
     },
   });
 
   const toggleDropdown = (e) => {
-    console.log("click");
     setIsOpen(!isOpen);
     e.stopPropagation();
   };
 
   const handleSelectedCarBrand = (selectedCarBrand) => {
-    console.log("Selected:", selectedCarBrand);
     setFieldValue("brand", selectedCarBrand);
   };
 
@@ -77,11 +77,14 @@ export const SearchBar = () => {
             name="brand"
             value={values.brand}
             onBlur={handleBlur}
-            $error={touched.brand && errors.brand}
+            readOnly
+            className={touched.brand && errors.brand ? "error" : ""}
             placeholder="Enter the text"
             autoComplete="off"
           />
-          {touched.brand && errors.brand && <div>{errors.brand}</div>}
+          {touched.brand && errors.brand && (
+            <div className="error-message">{errors.brand}</div>
+          )}
         </label>
         <CloseBtn
           type="button"
@@ -109,11 +112,13 @@ export const SearchBar = () => {
           value={values.price}
           onChange={handleChange}
           onBlur={handleBlur}
-          $error={touched.price && errors.price}
+          className={touched.price && errors.price ? "error" : ""}
           placeholder="To"
           autoComplete="off"
         />
-        {touched.price && errors.price && <div>{errors.price}</div>}
+        {touched.price && errors.price && (
+          <div className="error-message">{errors.price}</div>
+        )}
       </label>
       <label htmlFor="mileage">
         Сar mileage / km
@@ -123,12 +128,12 @@ export const SearchBar = () => {
           value={values.mileageFrom}
           onChange={handleChange}
           onBlur={handleBlur}
-          $error={touched.mileageFrom && errors.mileageFrom}
+          className={touched.mileageFrom && errors.mileageFrom ? "error" : ""}
           placeholder="From"
           autoComplete="off"
         />
         {touched.mileageFrom && errors.mileageFrom && (
-          <div>{errors.mileageFrom}</div>
+          <div className="error-message">{errors.mileageFrom}</div>
         )}
         <input
           type="text"
@@ -136,11 +141,13 @@ export const SearchBar = () => {
           value={values.mileageTo}
           onChange={handleChange}
           onBlur={handleBlur}
-          $error={touched.mileageTo && errors.mileageTo}
+          className={touched.mileageTo && errors.mileageTo ? "error" : ""}
           placeholder="To"
           autoComplete="off"
         />
-        {touched.mileageTo && errors.mileageTo && <div>{errors.mileageTo}</div>}
+        {touched.mileageTo && errors.mileageTo && (
+          <div className="error-message">{errors.mileageTo}</div>
+        )}
       </label>
 
       <button type="submit">Search</button>

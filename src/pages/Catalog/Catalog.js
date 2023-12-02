@@ -15,10 +15,14 @@ import {
   selectIsLoading,
   selectPage,
   selectPageLimit,
+  selectFilter,
 } from "../../redux";
+import { processFilter } from "../../helpers/filter";
+import data from "../../data.json";
 
 export const Catalog = () => {
   const dispatch = useDispatch();
+  const filter = useSelector(selectFilter);
   const favorites = useSelector(selectFavorites);
   const adverts = useSelector(selectAdverts);
   const page = useSelector(selectPage);
@@ -49,6 +53,29 @@ export const Catalog = () => {
     setShowModal(!showModal);
     setModalData(modalData);
   };
+  console.log("Filter from Redux state:", filter);
+
+  const filteredData = data.filter((item) => {
+    const filterObject = processFilter(filter);
+    console.log("filterObject.mileageFrom", Number(filterObject.mileageFrom));
+    console.log("filterObject.mileageTo", Number(filterObject.mileageTo));
+    console.log("item.mileage", item.mileage);
+    if (
+      (filterObject.brand && filterObject.brand !== item.make) ||
+      (filterObject.mileageFrom !== undefined &&
+        filterObject.mileageTo !== undefined &&
+        item.mileage >= Number(filterObject.mileageFrom) &&
+        item.mileage <= Number(filterObject.mileageTo)) ||
+      (filterObject.price && filterObject.price <= item.rentalPrice)
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+
+  console.log("Обработанный filter:", processFilter(filter));
+  console.log("filteredData:", filteredData);
 
   return (
     <>

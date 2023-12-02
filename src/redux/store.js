@@ -10,10 +10,12 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { filterSlice } from "./filter/filterSlice";
 
 export const store = configureStore({
   reducer: {
     adverts: persistedAdvertsSlice,
+    filter: filterSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
