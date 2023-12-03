@@ -1,25 +1,17 @@
-export const processFilter = (filter) => {
-  let processedFilter = {};
-
-  for (const key in filter) {
-    if (filter[key] === "") {
-      continue;
+export const hendleFilterData = (data, filter) => {
+  const filteredData = data.filter((item) => {
+    if (
+      (filter.brand && filter.brand !== item.make) ||
+      (filter.mileageFrom &&
+        filter.mileageTo &&
+        (item.mileage < Number(filter.mileageFrom) ||
+          item.mileage > Number(filter.mileageTo))) ||
+      (filter.price && Number(filter.price) < Number(item.rentalPrice))
+    ) {
+      return false;
     }
+    return true;
+  });
 
-    processedFilter[key] = filter[key];
-  }
-
-  if (
-    processedFilter.hasOwnProperty("mileageTo") &&
-    processedFilter.hasOwnProperty("mileageFrom")
-  ) {
-    processedFilter.mileageTo = Number(processedFilter.mileageTo);
-    processedFilter.mileageFrom = Number(processedFilter.mileageFrom);
-  }
-
-  if (processedFilter.hasOwnProperty("price")) {
-    processedFilter.price = Number(processedFilter.price);
-  }
-
-  return processedFilter;
+  return filteredData;
 };

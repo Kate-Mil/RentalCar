@@ -19,7 +19,7 @@ import {
   changeFilter,
   selectFilter,
 } from "../../redux";
-import { processFilter } from "../../helpers/filter";
+import { hendleFilterData } from "../../helpers/filter";
 
 export const Catalog = () => {
   const dispatch = useDispatch();
@@ -39,22 +39,7 @@ export const Catalog = () => {
     return favoriteIndex !== -1 ? favorites[favoriteIndex] : advert;
   });
 
-  const filteredData = getAdvertsWithFavorites.filter((item) => {
-    const filterObject = processFilter(filter);
-
-    if (
-      (filterObject.brand && filterObject.brand !== item.make) ||
-      (filterObject.mileageFrom &&
-        filterObject.mileageTo &&
-        item.mileage >= filterObject.mileageFrom &&
-        item.mileage <= filterObject.mileageTo) ||
-      (filterObject.price &&
-        filterObject.price < Number(item.rentalPrice.slice(1)))
-    ) {
-      return false;
-    }
-    return true;
-  });
+  const filteredData = hendleFilterData(getAdvertsWithFavorites, filter);
 
   const advertsForRender =
     Object.keys(filter).length === 0 ? getAdvertsWithFavorites : filteredData;
