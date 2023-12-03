@@ -4,6 +4,7 @@ import { AdvertListItem } from "components/AdvertListItem/AdvertListItem";
 import { ModalLearnMore } from "../../components/Modal/ModalLearnMore";
 import { CatalogListWrapper } from "./Catalog.styled";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   addToFavorites,
   deleteFromFavorites,
@@ -15,10 +16,10 @@ import {
   selectIsLoading,
   selectPage,
   selectPageLimit,
+  changeFilter,
   selectFilter,
 } from "../../redux";
 import { processFilter } from "../../helpers/filter";
-import data from "../../data.json";
 
 export const Catalog = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export const Catalog = () => {
   const pageLimit = useSelector(selectPageLimit);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
+
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(null);
 
@@ -37,8 +39,29 @@ export const Catalog = () => {
     return favoriteIndex !== -1 ? favorites[favoriteIndex] : advert;
   });
 
+  const filteredData = getAdvertsWithFavorites.filter((item) => {
+    const filterObject = processFilter(filter);
+
+    if (
+      (filterObject.brand && filterObject.brand !== item.make) ||
+      (filterObject.mileageFrom &&
+        filterObject.mileageTo &&
+        item.mileage >= filterObject.mileageFrom &&
+        item.mileage <= filterObject.mileageTo) ||
+      (filterObject.price &&
+        filterObject.price < Number(item.rentalPrice.slice(1)))
+    ) {
+      return false;
+    }
+    return true;
+  });
+
+  const advertsForRender =
+    Object.keys(filter).length === 0 ? getAdvertsWithFavorites : filteredData;
+
   useEffect(() => {
     dispatch(fetchAdverts(page));
+    dispatch(changeFilter({}));
   }, [dispatch, page]);
 
   const handleChooseFavorite = (data) => {
@@ -53,29 +76,6 @@ export const Catalog = () => {
     setShowModal(!showModal);
     setModalData(modalData);
   };
-  console.log("Filter from Redux state:", filter);
-
-  const filteredData = data.filter((item) => {
-    const filterObject = processFilter(filter);
-    console.log("filterObject.mileageFrom", Number(filterObject.mileageFrom));
-    console.log("filterObject.mileageTo", Number(filterObject.mileageTo));
-    console.log("item.mileage", item.mileage);
-    if (
-      (filterObject.brand && filterObject.brand !== item.make) ||
-      (filterObject.mileageFrom !== undefined &&
-        filterObject.mileageTo !== undefined &&
-        item.mileage >= Number(filterObject.mileageFrom) &&
-        item.mileage <= Number(filterObject.mileageTo)) ||
-      (filterObject.price && filterObject.price <= item.rentalPrice)
-    ) {
-      return false;
-    }
-
-    return true;
-  });
-
-  console.log("Обработанный filter:", processFilter(filter));
-  console.log("filteredData:", filteredData);
 
   return (
     <>
@@ -83,7 +83,7 @@ export const Catalog = () => {
       {error && <p>{error.message}</p>}
       <div>
         <CatalogListWrapper>
-          {getAdvertsWithFavorites.map((advert) => (
+          {advertsForRender.map((advert) => (
             <AdvertListItem
               key={advert.id}
               data={advert}

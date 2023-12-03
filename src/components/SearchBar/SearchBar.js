@@ -120,7 +120,7 @@ export const SearchBar = () => {
           <div className="error-message">{errors.price}</div>
         )}
       </label>
-      <label htmlFor="mileage">
+      <label htmlFor="mileageFrom">
         Сar mileage / km
         <input
           type="text"

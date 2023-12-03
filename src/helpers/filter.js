@@ -9,19 +9,16 @@ export const processFilter = (filter) => {
     processedFilter[key] = filter[key];
   }
 
-  //   if (
-  //     processedFilter.hasOwnProperty("mileageTo") &&
-  //     processedFilter.hasOwnProperty("mileageFrom")
-  //   ) {
-  //     processedFilter.mileage =
-  //       processedFilter.mileageTo - processedFilter.mileageFrom;
-
-  //     delete processedFilter.mileageTo;
-  //     delete processedFilter.mileageFrom;
-  //   }
+  if (
+    processedFilter.hasOwnProperty("mileageTo") &&
+    processedFilter.hasOwnProperty("mileageFrom")
+  ) {
+    processedFilter.mileageTo = Number(processedFilter.mileageTo);
+    processedFilter.mileageFrom = Number(processedFilter.mileageFrom);
+  }
 
   if (processedFilter.hasOwnProperty("price")) {
-    processedFilter.price = "$" + processedFilter.price;
+    processedFilter.price = Number(processedFilter.price);
   }
 
   return processedFilter;
