@@ -4,9 +4,34 @@ import {
   Overlay,
   ModalContent,
   ImgWrapper,
-  Container,
   CloseBtn,
+  Img,
+  Button,
+  Title,
+  TitleWrapper,
+  Model,
+  WrapperDetails,
+  ListDetails,
+  ItemDetails,
+  ItemText,
+  DescrWrapper,
+  DescrText,
+  AdvantagesWrapper,
+  TitleAdvantages,
+  ListAdvantages,
+  ItemAdvantages,
+  TextAdvantages,
+  RentalWrapper,
+  RentalTitle,
+  RentalDecor,
+  RentalText,
+  WrapperDecor,
+  RentalList,
+  RentalItem,
+  Svg,
 } from "./ModalLearnMore.styled";
+import sprite from "../../img/sprite.svg";
+import defaultPhoto from "../../img/defaultPhoto.jpg";
 
 export const ModalLearnMore = ({ modalData, onClick }) => {
   const [modalRoot, setModalRoot] = useState(null);
@@ -68,9 +93,9 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
   if (!modalRoot) {
     return null;
   }
-  const adressParts = address.split(/,\s*/);
-  const city = adressParts[1];
-  const country = adressParts[2];
+  const addressParts = address.split(/\s*\|\s*/);
+  const city = addressParts[0];
+  const country = addressParts[1];
 
   const rentalConditionsParts = rentalConditions.split("\n");
   const minimumAgeMatch = rentalConditionsParts[0].match(/\d+/);
@@ -80,55 +105,107 @@ export const ModalLearnMore = ({ modalData, onClick }) => {
     <Overlay onClick={handleOverlayClick}>
       <ModalContent>
         {" "}
-        <Container>
-          <CloseBtn type="button" onClick={() => onClick()}>
-            Close
-          </CloseBtn>
-          <ImgWrapper>
-            <img
-              src={img}
-              //   src={img ? img : defaultPhoto}
-              alt={`${make} ${model} ${year}`}
-            />
-          </ImgWrapper>
-          <div>
-            <h2>
-              {make}
-              <span>{model}</span>,{year}
-            </h2>
-            <div>
-              <p>{city}</p>
-              <p>{country}</p>
-              <p>Id: {id}</p>
-              <p>Year: {year}</p>
-              <p>Type: {type}</p>
-              <p>Fuel Consumption:{fuelConsumption}</p>
-              <p>Engine Size: {engineSize}</p>
-            </div>
-          </div>
-          <p>{description}</p>
-          <div>
-            <h3>Accessories and functionalities:</h3>
+        <CloseBtn type="button" onClick={() => onClick()}>
+          <Svg width="24" height="24">
+            <use href={`${sprite}#close`}></use>
+          </Svg>
+        </CloseBtn>
+        <ImgWrapper>
+          <Img
+            src={img !== "" ? img : defaultPhoto}
+            alt={`${make} ${model} ${year}`}
+          />
+        </ImgWrapper>
+        <TitleWrapper>
+          <Title>
+            {make}
+            <Model> {model}</Model>, {year}
+          </Title>
+        </TitleWrapper>
+        <WrapperDetails>
+          <ListDetails>
+            <ItemDetails>
+              <ItemText>{city}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>{country}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>Id: {id}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>Year: {year}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>Type: {type}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>Fuel Consumption:{fuelConsumption}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>Engine Size: {engineSize}</ItemText>
+            </ItemDetails>
+          </ListDetails>
+        </WrapperDetails>
+        <DescrWrapper>
+          <DescrText>{description}</DescrText>
+        </DescrWrapper>
+        <AdvantagesWrapper>
+          <TitleAdvantages>Accessories and functionalities:</TitleAdvantages>
+          <ListAdvantages>
             {accessories.length !== 0 &&
-              accessories.map((el, index) => <p key={index}>{el}</p>)}
+              accessories.map((el) => (
+                <ItemAdvantages key={el.id}>
+                  <TextAdvantages>{el.name}</TextAdvantages>
+                </ItemAdvantages>
+              ))}
             {functionalities.length !== 0 &&
-              functionalities.map((el, index) => <p key={index}>{el}</p>)}
-          </div>
-          <div>
-            <h3>Rental Conditions: </h3>
+              functionalities.map((el) => (
+                <TextAdvantages key={el.id}>{el.name}</TextAdvantages>
+              ))}
+          </ListAdvantages>
+        </AdvantagesWrapper>
+        <RentalWrapper>
+          <RentalTitle>Rental Conditions: </RentalTitle>
+          <RentalList>
             {minimumAge && (
-              <p>
-                Minimum age: <span className="highlight">{minimumAge}</span>
-              </p>
+              <RentalItem>
+                <WrapperDecor>
+                  <RentalText>
+                    Minimum age:
+                    <RentalDecor> {minimumAge}</RentalDecor>
+                  </RentalText>
+                </WrapperDecor>
+              </RentalItem>
             )}
             {rentalConditionsParts.slice(1).map((condition, index) => (
-              <p key={index}>{condition}</p>
-            ))}
-            <p>Mileage: {mileage}</p>
-            <p>Price:{rentalPrice}</p>
-          </div>
-          <a href="tel:+380730000000">Rental car</a>
-        </Container>
+              <RentalItem>
+                <RentalText key={index}>{condition}</RentalText>
+              </RentalItem>
+            ))}{" "}
+            <RentalItem>
+              <WrapperDecor>
+                <RentalText>
+                  Mileage:
+                  <RentalDecor>
+                    {" "}
+                    {mileage.toLocaleString("en-US", {
+                      maximumFractionDigits: 3,
+                    })}
+                  </RentalDecor>
+                </RentalText>
+              </WrapperDecor>
+            </RentalItem>
+            <RentalItem>
+              <WrapperDecor>
+                <RentalText>
+                  Price:<RentalDecor> {rentalPrice}$</RentalDecor>
+                </RentalText>
+              </WrapperDecor>
+            </RentalItem>
+          </RentalList>
+        </RentalWrapper>
+        <Button href="tel:+380730000000">Rental car</Button>
       </ModalContent>
     </Overlay>,
     modalRoot

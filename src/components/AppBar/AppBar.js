@@ -1,4 +1,5 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { List, Link } from "./AppBar.styled";
 
 export const AppBar = () => {
   const navigate = useNavigate();
@@ -10,20 +11,15 @@ export const AppBar = () => {
 
   return (
     <>
-      <ul style={{ display: "flex", gap: 25, flexDirection: "row" }}>
-        <NavLink to="/">
-          <button>Home</button>
-        </NavLink>
-        <NavLink to="/catalog" onClick={() => handleButtonClick("/catalog")}>
-          <button>Catalog</button>
-        </NavLink>
-        <NavLink
-          to="/favorites"
-          onClick={() => handleButtonClick("/favorites")}
-        >
-          <button>Favorites</button>
-        </NavLink>
-      </ul>
+      <List>
+        <Link to="/">Home</Link>
+        <Link to="/catalog" onClick={() => handleButtonClick("/catalog")}>
+          Catalog
+        </Link>
+        <Link to="/favorites" onClick={() => handleButtonClick("/favorites")}>
+          Favorites
+        </Link>
+      </List>
     </>
   );
 };

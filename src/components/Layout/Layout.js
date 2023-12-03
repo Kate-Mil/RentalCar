@@ -1,19 +1,22 @@
 import { Outlet, useLocation } from "react-router-dom";
-import { AppBar } from "components/AppBar/AppBar";
 import { SearchBar } from "components/SearchBar/SearchBar";
+import { Header } from "components/Header/Header";
+import { Container } from "./Layout.styled";
 
 const Layout = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
   return (
-    <>
-      <AppBar />
-      {!isHomePage && <SearchBar />}
-      <div>
-        <Outlet />
-      </div>
-    </>
+    <Container>
+      <Header />
+      <main>
+        {!isHomePage && <SearchBar />}
+        <div>
+          <Outlet />
+        </div>
+      </main>
+    </Container>
   );
 };
 export default Layout;

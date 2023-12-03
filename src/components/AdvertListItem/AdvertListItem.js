@@ -13,7 +13,7 @@ import {
 } from "./AdvertListItem.styled";
 import { FavoriteButton } from "components/FavoriteBtn/FavoriteBtn";
 
-// import defaultPhoto from "../../img/defaultPhoto.jpg";
+import defaultPhoto from "../../img/defaultPhoto.jpg";
 
 export const AdvertListItem = ({
   data,
@@ -51,8 +51,7 @@ export const AdvertListItem = ({
             isFavorite={favorites.includes(data)}
           />
           <Img
-            src={img}
-            //   src={img ? img : defaultPhoto}
+            src={img !== "" ? img : defaultPhoto}
             alt={`${make} ${model} ${year}`}
           />
         </ImgWrapper>

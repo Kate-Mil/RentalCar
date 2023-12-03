@@ -17,6 +17,7 @@ export const Img = styled.img`
 
 export const Container = styled.div`
   height: 100%;
+  max-width: 274px;
 `;
 
 export const Title = styled.h2`
@@ -46,7 +47,7 @@ export const ListDetails = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  max-width: 100%;
+  // max-width: 100%;
 `;
 
 export const ItemDetails = styled.li`
@@ -75,7 +76,7 @@ export const ItemText = styled.p`
 
 export const Button = styled.button`
   display: flex;
-  width: 100%;
+  width: 274px;
   height: 44px;
   padding: 12px 99px;
   justify-content: center;
