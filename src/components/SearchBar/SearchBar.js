@@ -37,6 +37,7 @@ export const SearchBar = () => {
     validationSchema: SearchFormSchema,
     onSubmit: async (values) => {
       dispatch(changeFilter(values));
+      alert(JSON.stringify(values, null, 2));
       resetForm();
     },
   });
@@ -88,7 +89,8 @@ export const SearchBar = () => {
         <Label htmlFor="mileageFrom">
           Сar mileage / km
           <Input
-            type="text"
+            type="number"
+            step="any"
             name="mileageFrom"
             value={values.mileageFrom}
             onChange={handleChange}
@@ -103,7 +105,8 @@ export const SearchBar = () => {
         </Label>
         <Label>
           <Input
-            type="text"
+            type="number"
+            step="any"
             name="mileageTo"
             value={values.mileageTo}
             onChange={handleChange}

@@ -4,8 +4,8 @@ export const hendleFilterData = (data, filter) => {
       (filter.brand && filter.brand !== item.make) ||
       (filter.mileageFrom &&
         filter.mileageTo &&
-        (item.mileage < Number(filter.mileageFrom) ||
-          item.mileage > Number(filter.mileageTo))) ||
+        (item.mileage < filter.mileageFrom * 1000 ||
+          item.mileage > filter.mileageTo * 1000)) ||
       (filter.price && Number(filter.price) < Number(item.rentalPrice))
     ) {
       return false;
