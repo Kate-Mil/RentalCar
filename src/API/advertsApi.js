@@ -1,5 +1,3 @@
-// `https:656656a564fcff8d730eb4ad.mockapi.io/api` /adverts
-
 import axios from "axios";
 axios.defaults.baseURL = "https://648ca5e48620b8bae7ed3008.mockapi.io";
 
