@@ -1,58 +1,10 @@
-import { NavLink } from "react-router-dom";
+import { HomePage } from "components/HomePage/HomePage";
+import { Section } from "components/Common.styled";
+
 export const Home = () => {
   return (
-    <>
-      <h1>Вітаємо на сайті аренди автомобілів</h1>
-
-      <section>
-        <h2>Наші послуги</h2>
-        <p>
-          Ми пропонуємо широкий вибір автомобілів для аренди, включаючи
-          економ-клас, комфорт-клас, SUV та багато інших.
-        </p>
-        <p>
-          Наші автомобілі завжди обслуговуються та перевіряються, щоб вам було
-          комфортно та безпечно подорожувати.
-        </p>
-      </section>
-
-      <section>
-        <h2>Як замовити</h2>
-        <p>
-          Для замовлення автомобіля, зв'яжіться з нашим менеджером за телефоном
-          або <NavLink to="/catalog">перейдіть в каталог</NavLink>.
-        </p>
-        <p>
-          Ми гарантуємо простий та зручний процес бронювання, а також доступні
-          тарифи для різних класів автомобілів.
-        </p>
-      </section>
-
-      <section>
-        <h2>Наші партнери</h2>
-        <ul>
-          <li>
-            <img src="" alt="1partner" />
-            <p>1</p>
-          </li>
-          <li>
-            <img src="" alt="2partner" />
-            <p>2</p>
-          </li>
-          <li>
-            <img src="" alt="3partner" />
-            <p>3</p>
-          </li>
-          <li>
-            <img src="" alt="4partner" />
-            <p>4</p>
-          </li>
-        </ul>
-      </section>
-
-      <footer>
-        <p>&copy; 2023 Аренда автомобілів. Усі права захищено.</p>
-      </footer>
-    </>
+    <Section>
+      <HomePage />
+    </Section>
   );
 };
