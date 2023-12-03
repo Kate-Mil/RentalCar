@@ -37,7 +37,6 @@ export const SearchBar = () => {
     validationSchema: SearchFormSchema,
     onSubmit: async (values) => {
       dispatch(changeFilter(values));
-      alert(JSON.stringify(values, null, 2));
       resetForm();
     },
   });
