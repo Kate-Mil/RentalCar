@@ -1,4 +1,16 @@
-import { ImgWrapper, Container } from "./AdvertListItem.styled";
+import {
+  ImgWrapper,
+  Container,
+  Button,
+  ItemText,
+  WrapperDetails,
+  ListDetails,
+  ItemDetails,
+  Title,
+  Model,
+  TitleWrapper,
+  Img,
+} from "./AdvertListItem.styled";
 import { FavoriteButton } from "components/FavoriteBtn/FavoriteBtn";
 
 // import defaultPhoto from "../../img/defaultPhoto.jpg";
@@ -16,15 +28,15 @@ export const AdvertListItem = ({
     model,
     type,
     img,
-    functionalities,
+    accessories,
     rentalPrice,
     rentalCompany,
     address,
   } = data;
 
-  const adressParts = address.split(/,\s*/);
-  const city = adressParts[1];
-  const country = adressParts[2];
+  const addressParts = address.split(/\s*\|\s*/);
+  const city = addressParts[0];
+  const country = addressParts[1];
 
   const handlClick = () => {
     onClick(data);
@@ -38,32 +50,52 @@ export const AdvertListItem = ({
             onClick={() => onChooseFavorite(data)}
             isFavorite={favorites.includes(data)}
           />
-          <img
+          <Img
             src={img}
             //   src={img ? img : defaultPhoto}
             alt={`${make} ${model} ${year}`}
           />
         </ImgWrapper>
-        <div>
-          <div>
-            <h2>
-              {make}
-              <span>{model}</span>,{year}
-            </h2>
-            <p>{rentalPrice}</p>
-          </div>
-          <div>
-            <p>{city}</p>
-            <p>{country}</p>
-            <p>{rentalCompany}</p>
-            <p>premium</p>
-            <p>{type}</p>
-            <p>{model}</p>
-            <p>{id}</p>
-            {functionalities.length !== 0 && <p>{functionalities[0]}</p>}
-          </div>
-        </div>
-        <button onClick={handlClick}>Learn more</button>
+
+        <TitleWrapper>
+          <Title>
+            {make}
+            <Model> {model}</Model>, {year}
+          </Title>
+          <Title>${rentalPrice}</Title>
+        </TitleWrapper>
+        <WrapperDetails>
+          <ListDetails>
+            <ItemDetails>
+              <ItemText>{city}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>{country}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>{rentalCompany}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>Premium</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>{type}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>{model}</ItemText>
+            </ItemDetails>
+            <ItemDetails>
+              <ItemText>{id}</ItemText>
+            </ItemDetails>
+            {accessories.length !== 0 && (
+              <ItemDetails>
+                <ItemText>{accessories[0]}</ItemText>
+              </ItemDetails>
+            )}
+          </ListDetails>
+        </WrapperDetails>
+
+        <Button onClick={handlClick}>Learn more</Button>
       </Container>
     </>
   );
